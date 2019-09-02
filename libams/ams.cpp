@@ -5,10 +5,30 @@
 
 IMPLEMENT_BASE_ARRAY("libams", 10);
 
+typedef struct {
+	_u8 method;
+	_cstr_t path;
+	_gatn_route_event_t *handler;
+}_route_handlers_t;
+
 class cAms: public iGatnExtension {
 private:
 	iArgs	*mpi_args;
 	iLog	*mpi_log;
+
+	_route_handlers_t g_route[16]={
+		{HTTP_METHOD_GET,	"/ams/register-modal",	[](_u8 method, _request_t *req, _response_t *res, void *udata) {
+			cAms *obj = (cAms *)udata;
+			//...
+		}},
+		{HTTP_METHOD_GET,	"/ams/login-modal",	[](_u8 method, _request_t *req, _response_t *res, void *udata) {
+			cAms *obj = (cAms *)udata;
+			//...
+		}},
+		//...
+		{0,	NULL,	NULL}
+	};
+
 public:
 	BASE(cAms, "cAms", RF_CLONE, 1,0,0);
 
@@ -39,13 +59,23 @@ public:
 
 	bool attach(_server_t *p_srv, _cstr_t host=NULL) {
 		bool r = false;
+		_u32 n = 0;
 
-		//...
+		while(g_route[n].method) {
+			p_srv->on_route(g_route[n].method, g_route[n].path, g_route[n].handler, this, host);
+			n++;
+		}
 
 		return r;
 	}
 
 	void detach(_server_t *p_srv, _cstr_t host=NULL) {
+		_u32 n = 0;
+
+		while(g_route[n].method) {
+			p_srv->remove_route(g_route[n].method, g_route[n].path, host);
+			n++;
+		}
 	}
 };
 
