@@ -34,11 +34,7 @@ public:
 	}
 
 	bool options(_cstr_t opt) {
-		bool r = false;
-
-		//...
-
-		return r;
+		return mpi_args->init(opt);
 	}
 
 	bool attach(_server_t *p_srv, _cstr_t host=NULL) {
