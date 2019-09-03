@@ -60,7 +60,7 @@ public:
 	}
 
 	bool attach(_server_t *p_srv, _cstr_t host=NULL) {
-		bool r = false;
+		bool r = true;
 		_u32 n = 0;
 
 		while(g_route[n].method) {
