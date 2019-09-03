@@ -17,15 +17,21 @@ private:
 	iLog	*mpi_log;
 
 	_route_handlers_t g_route[16]={
-		{HTTP_METHOD_GET,	"/ams/register-modal",	[](_u8 method, _request_t *req, _response_t *res, void *udata) {
+		{HTTP_METHOD_GET,	"/ams/register-modal",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
 			cAms *obj = (cAms *)udata;
-			//...
-			res->end(HTTPRC_OK, "Modal Register Form");
+
+			if(evt == ON_REQUEST) {
+				//...
+				res->end(HTTPRC_OK, "Modal Register Form");
+			}
 		}},
-		{HTTP_METHOD_GET,	"/ams/login-modal",	[](_u8 method, _request_t *req, _response_t *res, void *udata) {
+		{HTTP_METHOD_GET,	"/ams/login-modal",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
 			cAms *obj = (cAms *)udata;
-			//...
-			res->end(HTTPRC_OK,"Modal Login Form");
+
+			if(evt == ON_REQUEST) {
+				//...
+				res->end(HTTPRC_OK,"Modal Login Form");
+			}
 		}},
 		//...
 		{0,	NULL,	NULL}
