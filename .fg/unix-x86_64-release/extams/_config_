@@ -1,5 +1,5 @@
 LIB_PATH=$(OUTDIR)/core/$(CONFIG)/libstartup-ext
-COMPILER_FLAGS+=-fPIC
-LINKER_FLAGS+=-fpic -shared -u init $(LIB_PATH)/libstartup-ext.a
-LIBRARY += -lssl -lcrypto
+COMPILER_FLAGS+=-fPIC -I/usr/local/pgsql/include/
+LINKER_FLAGS+=-fpic -shared -u init $(LIB_PATH)/libstartup-ext.a -L/usr/local/pgsql/lib
+LIBRARY += -lssl -lcrypto -lpq
 
