@@ -15,6 +15,8 @@ class cAms: public iGatnExtension {
 private:
 	iArgs	*mpi_args;
 	iLog	*mpi_log;
+	bool	m_use_doc_root;
+	_cstr_t m_ams_path;
 
 	_route_handlers_t g_route[16]={
 		{HTTP_METHOD_GET,	"/ams/download-register-modal",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
@@ -33,6 +35,14 @@ private:
 				res->end(HTTPRC_OK,"Modal Login Form");
 			}
 		}},
+		{HTTP_METHOD_GET,	"/ams/download-css",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
+			cAms *obj = (cAms *)udata;
+
+			if(evt == ON_REQUEST) {
+				//...
+				res->end(HTTPRC_OK,"AMS stiles");
+			}
+		}},
 		//...
 		{0,	NULL,	NULL}
 	};
@@ -45,6 +55,8 @@ public:
 
 		switch(cmd) {
 			case OCTL_INIT:
+				m_use_doc_root = false;
+				m_ams_path = NULL;
 				mpi_args = dynamic_cast<iArgs *>(_gpi_repo_->object_by_iname(I_ARGS, RF_CLONE|RF_NONOTIFY));
 				mpi_log = dynamic_cast<iLog *>(_gpi_repo_->object_by_iname(I_LOG, RF_ORIGINAL));
 
@@ -62,7 +74,14 @@ public:
 	}
 
 	bool options(_cstr_t opt) {
-		return mpi_args->init(opt);
+		bool r = mpi_args->init(opt);
+
+		if(r) {
+			m_use_doc_root = mpi_args->check("use-doc-root");
+			m_ams_path = mpi_args->value("path");
+		}
+
+		return r;
 	}
 
 	bool attach(_server_t *p_srv, _cstr_t host=NULL) {
