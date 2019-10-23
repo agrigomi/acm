@@ -34,4 +34,6 @@ public:
 	void destroy(void);
 };
 
+_dbc_incubator_t *get_dbci(void);
+
 #endif

@@ -23,6 +23,7 @@ private:
 	_cstr_t m_db_user;
 	_cstr_t m_db_pass;
 	_cstr_t m_db_name;
+	_dbc_incubator_t m_dbci;
 
 	_route_handlers_t g_route[16]={
 		{HTTP_METHOD_GET,	"/ams/download-register-modal",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
@@ -106,6 +107,10 @@ public:
 		bool r = true;
 		_u32 n = 0;
 
+		m_dbci.init(m_db_host, m_db_port,
+			m_db_user, m_db_pass,
+			m_db_name);
+
 		while(g_route[n].method) {
 			p_srv->on_route(g_route[n].method, g_route[n].path, g_route[n].handler, this, host);
 			n++;
@@ -121,6 +126,8 @@ public:
 			p_srv->remove_route(g_route[n].method, g_route[n].path, host);
 			n++;
 		}
+
+		m_dbci.destroy();
 	}
 };
 

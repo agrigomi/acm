@@ -1,3 +1,4 @@
+#include <string.h>
 #include "iRepository.h"
 #include "private.h"
 
@@ -41,6 +42,12 @@ dbc_incubator::~dbc_incubator() {
 
 void dbc_incubator::init(_cstr_t db_host, _cstr_t db_port, _cstr_t db_user, _cstr_t db_pass, _cstr_t db_name) {
 	if(!mpi_pool) {
+		m_db_host = db_host;
+		m_db_port = db_port;
+		m_db_user = db_user;
+		m_db_pass = db_pass;
+		m_db_name = db_name;
+
 		if((mpi_pool = dynamic_cast<iPool *>(_gpi_repo_->object_by_iname(I_POOL, RF_CLONE)))) {
 			mpi_pool->init(sizeof(_dbc_t), [](_u8 op, void *data, void *udata) {
 				_dbc_t *p_dbc = (_dbc_t *)data;
@@ -90,3 +97,4 @@ void dbc_incubator::destroy(void) {
 		mpi_pool = NULL;
 	}
 }
+
