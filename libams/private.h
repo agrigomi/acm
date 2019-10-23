@@ -3,6 +3,7 @@
 
 #include "libpq-fe.h"
 #include "iMemory.h"
+#include "iLog.h"
 
 typedef struct dbc_incubator	_dbc_incubator_t;
 typedef struct {
@@ -13,11 +14,13 @@ public:
 	bool connect(_cstr_t db_host, _cstr_t db_port, _cstr_t db_user, _cstr_t db_pass, _cstr_t db_name);
 	void disconnect(void);
 	ConnStatusType status(void);
+	_cstr_t error_text(void);
 }_dbc_t;
 
 struct dbc_incubator {
 private:
 	iPool	*mpi_pool;
+	iLog	*mpi_log;
 	_cstr_t m_db_host;
 	_cstr_t m_db_port;
 	_cstr_t m_db_user;

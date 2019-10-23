@@ -31,6 +31,15 @@ ConnStatusType _dbc_t::status(void) {
 	return r;
 }
 
+_cstr_t _dbc_t::error_text(void) {
+	_cstr_t r = "Unknown error";
+
+	if(mp_pgc)
+		r = PQerrorMessage(mp_pgc);
+
+	return r;
+}
+
 dbc_incubator::dbc_incubator() {
 	mpi_pool = NULL;
 	m_db_host = m_db_port = m_db_user = m_db_pass = m_db_name = NULL;
@@ -70,6 +79,8 @@ void dbc_incubator::init(_cstr_t db_host, _cstr_t db_port, _cstr_t db_user, _cst
 				}
 			}, this);
 		}
+
+		mpi_log = dynamic_cast<iLog *>(_gpi_repo_->object_by_iname(I_LOG, RF_ORIGINAL));
 	}
 }
 
@@ -78,6 +89,7 @@ _dbc_t *dbc_incubator::alloc(void) {
 
 	if(r) {
 		if(r->status() != CONNECTION_OK) {
+			mpi_log->fwrite(LMT_ERROR, "DB: %s", r->error_text());
 			r->disconnect();
 			free(r);
 			r = NULL;
@@ -88,13 +100,16 @@ _dbc_t *dbc_incubator::alloc(void) {
 }
 
 void dbc_incubator::free(_dbc_t *p_dbc) {
-	mpi_pool->free(p_dbc);
+	if(p_dbc)
+		mpi_pool->free(p_dbc);
 }
 
 void dbc_incubator::destroy(void) {
 	if(mpi_pool) {
 		_gpi_repo_->object_release(mpi_pool);
 		mpi_pool = NULL;
+		_gpi_repo_->object_release(mpi_log);
+		mpi_log = NULL;
 	}
 }
 
