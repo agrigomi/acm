@@ -2,6 +2,7 @@
 #include "iGatn.h"
 #include "iArgs.h"
 #include "iLog.h"
+#include "private.h"
 
 IMPLEMENT_BASE_ARRAY("libams", 10);
 
@@ -17,6 +18,11 @@ private:
 	iLog	*mpi_log;
 	bool	m_use_doc_root;
 	_cstr_t m_ams_path;
+	_cstr_t m_db_host;
+	_cstr_t m_db_port;
+	_cstr_t m_db_user;
+	_cstr_t m_db_pass;
+	_cstr_t m_db_name;
 
 	_route_handlers_t g_route[16]={
 		{HTTP_METHOD_GET,	"/ams/download-register-modal",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
@@ -57,6 +63,11 @@ public:
 			case OCTL_INIT:
 				m_use_doc_root = false;
 				m_ams_path = NULL;
+				m_db_host = NULL;
+				m_db_port = "5432";
+				m_db_user = NULL;
+				m_db_pass = NULL;
+				m_db_name = NULL;
 				mpi_args = dynamic_cast<iArgs *>(_gpi_repo_->object_by_iname(I_ARGS, RF_CLONE|RF_NONOTIFY));
 				mpi_log = dynamic_cast<iLog *>(_gpi_repo_->object_by_iname(I_LOG, RF_ORIGINAL));
 
@@ -79,6 +90,13 @@ public:
 		if(r) {
 			m_use_doc_root = mpi_args->check("use-doc-root");
 			m_ams_path = mpi_args->value("path");
+			m_db_host = mpi_args->value("db-host");
+			if(!(m_db_port = mpi_args->value("db-port")))
+				m_db_port = "5432";
+			m_db_user = mpi_args->value("db-user");
+			m_db_pass = mpi_args->value("db-pass");
+			if(!(m_db_name = mpi_args->value("db-name")))
+				m_db_name = "ams";
 		}
 
 		return r;
