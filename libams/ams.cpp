@@ -25,38 +25,38 @@ private:
 	_cstr_t m_db_name;
 	_dbc_incubator_t m_dbci;
 
-	_route_handlers_t g_route[16]={
-		{HTTP_METHOD_GET,	"/ams/download-register-modal",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
+	_route_handlers_t m_route[16]={
+		{ HTTP_METHOD_GET,	"/ams/download-register-modal",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
 			if(evt == ON_REQUEST) {
 				//...
 				res->end(HTTPRC_OK, "Modal Register Form");
 			}
 		}},
-		{HTTP_METHOD_GET,	"/ams/download-login-modal",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
+		{ HTTP_METHOD_GET,	"/ams/download-login-modal",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
 			if(evt == ON_REQUEST) {
 				//...
 				res->end(HTTPRC_OK, "Modal Login Form");
 			}
 		}},
-		{HTTP_METHOD_GET,	"/ams/download-css",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
+		{ HTTP_METHOD_GET,	"/ams/download-css",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
 			if(evt == ON_REQUEST) {
 				//...
 				res->end(HTTPRC_OK, "AMS stiles");
 			}
 		}},
-		{HTTP_METHOD_GET,	"/ams/download-js",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
+		{ HTTP_METHOD_GET,	"/ams/download-js",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
 			if(evt == ON_REQUEST) {
 				//...
 				res->end(HTTPRC_OK, "AMS stiles");
 			}
 		}},
-		{HTTP_METHOD_GET,	"/ams/register-page",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
+		{ HTTP_METHOD_GET,	"/ams/register-page",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
 			if(evt == ON_REQUEST) {
 				//...
 				res->end(HTTPRC_OK, "AMS stiles");
 			}
 		}},
-		{HTTP_METHOD_GET,	"/ams/login-page",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
+		{ HTTP_METHOD_GET,	"/ams/login-page",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
 			if(evt == ON_REQUEST) {
 				//...
 				res->end(HTTPRC_OK, "AMS stiles");
@@ -123,8 +123,8 @@ public:
 			m_db_user, m_db_pass,
 			m_db_name);
 
-		while(g_route[n].method) {
-			p_srv->on_route(g_route[n].method, g_route[n].path, g_route[n].handler, this, host);
+		while(m_route[n].method) {
+			p_srv->on_route(m_route[n].method, m_route[n].path, m_route[n].handler, this, host);
 			n++;
 		}
 
@@ -134,8 +134,8 @@ public:
 	void detach(_server_t *p_srv, _cstr_t host=NULL) {
 		_u32 n = 0;
 
-		while(g_route[n].method) {
-			p_srv->remove_route(g_route[n].method, g_route[n].path, host);
+		while(m_route[n].method) {
+			p_srv->remove_route(m_route[n].method, m_route[n].path, host);
 			n++;
 		}
 
