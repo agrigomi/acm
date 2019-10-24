@@ -27,27 +27,39 @@ private:
 
 	_route_handlers_t g_route[16]={
 		{HTTP_METHOD_GET,	"/ams/download-register-modal",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
-			cAms *obj = (cAms *)udata;
-
 			if(evt == ON_REQUEST) {
 				//...
 				res->end(HTTPRC_OK, "Modal Register Form");
 			}
 		}},
 		{HTTP_METHOD_GET,	"/ams/download-login-modal",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
-			cAms *obj = (cAms *)udata;
-
 			if(evt == ON_REQUEST) {
 				//...
-				res->end(HTTPRC_OK,"Modal Login Form");
+				res->end(HTTPRC_OK, "Modal Login Form");
 			}
 		}},
 		{HTTP_METHOD_GET,	"/ams/download-css",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
-			cAms *obj = (cAms *)udata;
-
 			if(evt == ON_REQUEST) {
 				//...
-				res->end(HTTPRC_OK,"AMS stiles");
+				res->end(HTTPRC_OK, "AMS stiles");
+			}
+		}},
+		{HTTP_METHOD_GET,	"/ams/download-js",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
+			if(evt == ON_REQUEST) {
+				//...
+				res->end(HTTPRC_OK, "AMS stiles");
+			}
+		}},
+		{HTTP_METHOD_GET,	"/ams/register-page",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
+			if(evt == ON_REQUEST) {
+				//...
+				res->end(HTTPRC_OK, "AMS stiles");
+			}
+		}},
+		{HTTP_METHOD_GET,	"/ams/login-page",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
+			if(evt == ON_REQUEST) {
+				//...
+				res->end(HTTPRC_OK, "AMS stiles");
 			}
 		}},
 		//...
