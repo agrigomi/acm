@@ -106,6 +106,17 @@ _cstr_t _dbc_t::value(_u32 row, _u32 field) {
 	return r;
 }
 
+_cstr_t _dbc_t::value(_u32 row, _cstr_t field_name) {
+	_cstr_t r = "";
+
+	if(mp_pgres) {
+		_u32 field_num = PQfnumber(mp_pgres, field_name);
+		r = value(row, field_num);
+	}
+
+	return r;
+}
+
 _u32 _dbc_t::length(_u32 row, _u32 field) {
 	_u32 r = 0;
 

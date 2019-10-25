@@ -21,6 +21,7 @@ public:
 	_u32 fields(void);
 	_u32 rows(void);
 	_cstr_t value(_u32 row, _u32 field);
+	_cstr_t value(_u32 row, _cstr_t field_name);
 	_u32 length(_u32 row, _u32 field);
 }_dbc_t;
 
