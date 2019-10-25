@@ -47,19 +47,19 @@ private:
 		{ HTTP_METHOD_GET,	"/ams/download-js",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
 			if(evt == ON_REQUEST) {
 				//...
-				res->end(HTTPRC_OK, "AMS stiles");
+				res->end(HTTPRC_OK, "AMS scripts");
 			}
 		}},
 		{ HTTP_METHOD_GET,	"/ams/register-page",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
 			if(evt == ON_REQUEST) {
 				//...
-				res->end(HTTPRC_OK, "AMS stiles");
+				res->end(HTTPRC_OK, "AMS register page");
 			}
 		}},
 		{ HTTP_METHOD_GET,	"/ams/login-page",	[](_u8 evt, _request_t *req, _response_t *res, void *udata) {
 			if(evt == ON_REQUEST) {
 				//...
-				res->end(HTTPRC_OK, "AMS stiles");
+				res->end(HTTPRC_OK, "AMS login page");
 			}
 		}},
 		//...
