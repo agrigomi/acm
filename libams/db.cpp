@@ -98,7 +98,7 @@ _u32 _dbc_t::rows(void) {
 }
 
 _cstr_t _dbc_t::value(_u32 row, _u32 field) {
-	_cstr_t r = NULL;
+	_cstr_t r = "";
 
 	if(mp_pgres)
 		r = PQgetvalue(mp_pgres, row, field);
