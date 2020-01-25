@@ -6,6 +6,7 @@
 #include "iLog.h"
 
 typedef struct dbc_incubator	_dbc_incubator_t;
+
 typedef struct {
 private:
 	PGconn *mp_pgc;

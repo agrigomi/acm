@@ -197,6 +197,9 @@ void dbc_incubator::destroy(void) {
 	if(mpi_pool) {
 		_gpi_repo_->object_release(mpi_pool);
 		mpi_pool = NULL;
+	}
+
+	if(mpi_log) {
 		_gpi_repo_->object_release(mpi_log);
 		mpi_log = NULL;
 	}
