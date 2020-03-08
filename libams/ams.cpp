@@ -88,7 +88,7 @@ public:
 					r = true;
 				break;
 			case OCTL_UNINIT:
-				_gpi_repo_->object_release(mpi_args, false);
+				_gpi_repo_->object_release(mpi_args);
 				_gpi_repo_->object_release(mpi_log);
 				m_dbci.destroy();
 				r = true;
